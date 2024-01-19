@@ -1,16 +1,20 @@
-const fs = require('fs').promises;
-const path = require('path');
-const { nanoid } = require('nanoid');
+import {fileURLToPath} from 'url'
+import {dirname} from 'path'
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+import { promises as fs } from 'fs';
+import path from "path";
+import { nanoid } from "nanoid";
 
 const contactsPath = path.join(__dirname,'db', 'contacts.json');
-console.log({contactsPath});
 
 export async function listContacts() {
   const data = await fs.readFile(contactsPath);
   return JSON.parse(data);
 }
 
-export async function getContactById(contactId) {
+export async function addgetContactById(contactId) {
   const contacts = await listContacts();
   const result = contacts.find(item => item.id === contactId);
   return result || null;
@@ -40,7 +44,7 @@ export async function addContact(name, email, phone) {
   return newContacts; 
 }
 
-export const updateContact = async (contactId, body) => {
+export const addupdateContact = async (contactId, body) => {
   const contacts = await listContacts();
   const index = contacts.findIndex((contact) => contact.id === contactId);
   if (index === -1) {

@@ -1,11 +1,11 @@
-const { HttpError } = require("../helpers/HttpError")
+import HttpError from '../helpers/HttpError.js';
 
 import {
     listContacts,
-    getContactById,
+    addgetContactById,
     addContact,
     removeContact,
-    updateContact
+    addupdateContact
 } from "../services/contactsServices.js";
 
 export const getAllContacts = async (req, res, next) => {
@@ -21,7 +21,7 @@ export const getAllContacts = async (req, res, next) => {
 export const getContactById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await getContactById(contactId);
+    const result = await addgetContactById(contactId);
     if (!result) {
       throw HttpError(404, "Not found");
     }
@@ -64,7 +64,7 @@ export const createContact = async (req, res, next) => {
 export const updateContact = async (req, res, next) => {
     try {
         const { contactId } = req.params;
-        const result = await updateContact(contactId, req.body);
+        const result = await addupdateContact(contactId, req.body);
         if (!result) {
             throw HttpError(404, "Not found");
         }
